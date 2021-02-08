@@ -12,12 +12,13 @@ namespace ConsoleOCR
         static void Main(string[] args)
         {
             string path = @"C:\Users\UDI005\source\Repos\PruebaOCR\PruebaOCR\getEdocuentaBajas.PNG";
+            string path2 = @"C:\Users\UDI005\Pictures\sampleTesseract.png";
             string text = "";
             try
             {
                 using (var engine = new TesseractEngine(@"./tessdata", "eng", EngineMode.Default))
                 {
-                    using(var imag = Pix.LoadFromFile(path))
+                    using(var imag = Pix.LoadFromFile(path2))
                     {
                         using(var page = engine.Process(imag))
                         {
