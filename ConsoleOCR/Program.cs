@@ -1,41 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Tesseract;
+﻿using Google.Cloud.Vision.V1;
+using System;
 
-namespace ConsoleOCR
+namespace GoogleCloudSamples
 {
-    class Program
+    public class QuickStart
     {
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
-            string path = @"C:\Users\UDI005\source\Repos\PruebaOCR\PruebaOCR\getEdocuentaBajas.PNG";
-            string path2 = @"C:\Users\UDI005\Pictures\sampleTesseract.png";
-            string text = "";
-            try
+            // Instantiates a client
+            var client = ImageAnnotatorClient.Create();
+            // Load the image file into memory
+            var image = Image.FromFile("yazzine.jfif");
+            // Performs label detection on the image file
+            var response = client.DetectText(image);
+            foreach (var annotation in response)
             {
-                using (var engine = new TesseractEngine(@"./tessdata", "eng", EngineMode.Default))
-                {
-                    using(var imag = Pix.LoadFromFile(path2))
-                    {
-                        using(var page = engine.Process(imag))
-                        {
-                            text = page.GetText();
-                        }
-                    }
-
-                }                
-
+                if (annotation.Description != null)
+                    Console.WriteLine(annotation.Description);
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
-
-            Console.WriteLine(text);
-            Console.ReadLine();
         }
     }
 }
+
