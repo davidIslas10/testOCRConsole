@@ -27,17 +27,7 @@ namespace GoogleCloudSamples
             
             string resultado = "";
             string resultado2 = "";
-            string projectId = "ocrvision-1612904170252";
-
-            var credential = GoogleCredential.GetApplicationDefault();
-            var storage = StorageClient.Create(credential);
-            // Make an authenticated API request.
-            var buckets = storage.ListBuckets(projectId);
-            foreach (var bucket in buckets)
-            {
-                Console.WriteLine(bucket.Name);
-            }
-
+           
 
             // Instantiates a client
             var client = ImageAnnotatorClient.Create();
