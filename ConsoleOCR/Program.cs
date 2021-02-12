@@ -17,13 +17,27 @@ namespace GoogleCloudSamples
     {
         public static void Main(string[] args)
         {
-            var image = Image.FromFile("hrisife.jpg");
+            string chris = "chrisife.jpg";
+            string yaz = "yazzine.JFIF";
+            string david = "davidine.jpg";
+            string brayan = "brayanine.JPG";
+            var image = Image.FromFile(@"davidine.jpg");
             string clave = "";
             string curp = "";
             
             string resultado = "";
             string resultado2 = "";
-           
+            string projectId = "ocrvision-1612904170252";
+
+            var credential = GoogleCredential.GetApplicationDefault();
+            var storage = StorageClient.Create(credential);
+            // Make an authenticated API request.
+            var buckets = storage.ListBuckets(projectId);
+            foreach (var bucket in buckets)
+            {
+                Console.WriteLine(bucket.Name);
+            }
+
 
             // Instantiates a client
             var client = ImageAnnotatorClient.Create();
@@ -34,7 +48,7 @@ namespace GoogleCloudSamples
             foreach (var annotation in response)
             {
                 if (annotation.Description != null)
-                    //Console.WriteLine(annotation.Description);
+                  //  Console.WriteLine(annotation.Description);
 
 
                     //Aqui se obtiene la clave de elector de la credencial        
@@ -44,7 +58,7 @@ namespace GoogleCloudSamples
                     clave.IndexOf("CLAVE DE ELECTOR "),
                     35);
 
-                    //Aqui se obtiene la curp de la credencial        
+                //Aqui se obtiene la curp de la credencial        
                     curp = annotation.Description;
 
                     resultado2 = curp.Substring(
@@ -53,9 +67,9 @@ namespace GoogleCloudSamples
 
 
 
-                    Console.WriteLine(resultado);
-                    Console.WriteLine(resultado2);
-               
+                Console.WriteLine(resultado);
+                Console.WriteLine(resultado2);
+
 
                 Console.ReadKey();
             }
@@ -63,7 +77,9 @@ namespace GoogleCloudSamples
 
 
         }
+
        
+
     }
 }
 
